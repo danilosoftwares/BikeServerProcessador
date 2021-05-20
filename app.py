@@ -2,6 +2,9 @@
 from flask import Flask
 import processamento
 import upload
+import banco
+
+banco.Create()
 
 app = Flask(__name__)
 
