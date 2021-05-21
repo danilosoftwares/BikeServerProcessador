@@ -1,4 +1,3 @@
-
 from flask import Flask
 import processamento
 import upload
@@ -15,8 +14,6 @@ app.add_url_rule('/processar/detail', methods = ['GET'], view_func=processamento
 app.add_url_rule('/processar/special', methods = ['GET'], view_func=processamento.processar_SpecialOfferProduct)
 app.add_url_rule('/processar/product', methods = ['GET'], view_func=processamento.processar_product)
 app.add_url_rule('/processar/all', methods = ['GET'], view_func=processamento.processar_all)
-
-
 app.add_url_rule('/arquivos/upload', methods = ['POST'], view_func=upload.upload_file)
 
 @app.route("/")
