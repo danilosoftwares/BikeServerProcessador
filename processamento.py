@@ -3,15 +3,39 @@ import tabelas
 import banco
 import time
 
-def processar():        
-    Gravador('person.person.csv',tabelas.Person, 1000)    
-    Gravador('Sales.Customer.csv',tabelas.Customer, 1000)
-    time.sleep(10)
-    Gravador('Sales.SalesOrderHeader.csv',tabelas.SalesOrderHeader, 300)
-    Gravador('Sales.SalesOrderDetail.csv',tabelas.SalesOrderDetail, 300)
-    Gravador('Sales.SpecialOfferProduct.csv',tabelas.SpecialOfferProduct, 1000)
-    Gravador('Production.Product.csv',tabelas.Product, 1000)    
+def processar_all():
+    processar_person()
+    processar_customer()
+    processar_product()
+    processar_SalesOrderHeader()
+    processar_SalesOrderDetail()
+    processar_SpecialOfferProduct()
     return jsonify({"status":0,"retorno":"ok"}) 
+
+def processar_person():        
+    Gravador('person.person.csv',tabelas.Person, 1000)    
+    return jsonify({"status":0,"retorno":"ok"}) 
+
+def processar_customer():    
+    Gravador('Sales.Customer.csv',tabelas.Customer, 1000)
+    return jsonify({"status":0,"retorno":"ok"}) 
+
+def processar_SalesOrderHeader():
+    Gravador('Sales.SalesOrderHeader.csv',tabelas.SalesOrderHeader, 300)
+    return jsonify({"status":0,"retorno":"ok"}) 
+
+def processar_SalesOrderDetail():
+    Gravador('Sales.SalesOrderDetail.csv',tabelas.SalesOrderDetail, 300)
+    return jsonify({"status":0,"retorno":"ok"}) 
+
+def processar_SpecialOfferProduct():
+    Gravador('Sales.SpecialOfferProduct.csv',tabelas.SpecialOfferProduct, 1000)
+    return jsonify({"status":0,"retorno":"ok"}) 
+
+def processar_product():
+    Gravador('Production.Product.csv',tabelas.Product, 1000)  
+    return jsonify({"status":0,"retorno":"ok"})       
+
 
 def Gravador(file, classe, bloco):    
     total = 0
