@@ -39,11 +39,9 @@ def Gravador(file, classe, bloco):
         wr = ''
         connector = banco.GetConnector()
         listaSQL = []
-        f = open(file, "r")
-        line = f.readline()
-        line = f.readline()
-        while line:
-            line = line.replace('\n','')
+        i = 1
+        while(i < len(file)):
+            line = file[i].replace('\n','')
             if (line != ''):
                 obj = classe(FormatNull(line.split(';')))
                 if (wr == ''):
@@ -65,9 +63,8 @@ def Gravador(file, classe, bloco):
                 total = total + (contador - 1)
                 print(total)
                 listaSQL = []
-                contador = 0
-            
-            line = f.readline()
+                contador = 0    
+            i = i + 1    
 
         if (len(listaSQL) > 0):
             listaSQL.append(') TB ')   

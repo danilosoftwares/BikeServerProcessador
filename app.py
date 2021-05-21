@@ -3,7 +3,7 @@ import processamento
 import upload
 import banco
 
-banco.Create()
+#banco.Create()
 
 app = Flask(__name__)
 
