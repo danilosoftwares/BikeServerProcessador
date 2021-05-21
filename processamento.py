@@ -1,21 +1,70 @@
+from flask import jsonify
 import tabelas
+import banco
+import time
 
 def processar():        
-    ps = Listar('person.person.csv',tabelas.Person)    
-    ct  = Listar('Sales.Customer.csv',tabelas.Customer)
-    soh  = Listar('Sales.SalesOrderHeader.csv',tabelas.SalesOrderHeader)
-    sod  = Listar('Sales.SalesOrderDetail.csv',tabelas.SalesOrderDetail)
-    sop  = Listar('Sales.SpecialOfferProduct.csv',tabelas.SpecialOfferProduct)
-    pd  = Listar('Production.Product.csv',tabelas.Product)    
-    return 'p.lista'
+    Gravador('person.person.csv',tabelas.Person, 1000)    
+    Gravador('Sales.Customer.csv',tabelas.Customer, 1000)
+    time.sleep(10)
+    Gravador('Sales.SalesOrderHeader.csv',tabelas.SalesOrderHeader, 300)
+    Gravador('Sales.SalesOrderDetail.csv',tabelas.SalesOrderDetail, 300)
+    Gravador('Sales.SpecialOfferProduct.csv',tabelas.SpecialOfferProduct, 1000)
+    Gravador('Production.Product.csv',tabelas.Product, 1000)    
+    return jsonify({"status":0,"retorno":"ok"}) 
 
-def Listar(file, classe):
+def Gravador(file, classe, bloco):    
+    total = 0
+    contador = 0
+    wr = ''
+    connector = banco.GetConnector()
+    listaSQL = []
     f = open(file, "r")
-    lista = f.read().split('\n')
-    lista = lista[1:len(lista)]
+    line = f.readline()
+    line = f.readline()
+    while line:
+        line = line.replace('\n','')
+        if (line != ''):
+            obj = classe(FormatNull(line.split(';')))
+            if (wr == ''):
+                wr = obj.WhereSQL()
+            if (len(listaSQL) == 0):
+                listaSQL.append('INSERT INTO '+type(obj).__name__+' ('+obj.Colunas+') ')
+                listaSQL.append('SELECT * FROM ( ')   
+            else:
+                listaSQL.append('UNION ALL ')    
+            listaSQL.append("SELECT "+obj.Valores+" FROM DUAL ")
+            contador = contador + 1
+
+        if (contador > bloco):
+            listaSQL.append(') TB ')   
+            listaSQL.append(wr)  
+            r = banco.Set("".join(listaSQL),connector)
+            if (r['status'] != 0):
+                print(r)
+            total = total + (contador - 1)
+            print(total)
+            listaSQL = []
+            contador = 0
+        
+        line = f.readline()
+
+    if (len(listaSQL) > 0):
+        listaSQL.append(') TB ')   
+        listaSQL.append(wr)  
+        r = banco.Set("".join(listaSQL),connector)
+        if (r['status'] != 0):
+            print(r)
+        total = total + (contador - 1)
+        print(total)
+        listaSQL = []
+        contador = 0
+    connector.close()
+
+def FormatNull(lista):
     i = 0
-    while(i < len(lista)):
-        if (lista[i] != ''):
-            lista[i] = classe(lista[i].split(';'))
+    while(i != len(lista)):
+        if (lista[i] == 'NULL'):
+            lista[i] = None
         i=i+1
     return lista
