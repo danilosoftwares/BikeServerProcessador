@@ -15,7 +15,7 @@ def upload_file():
                     retorno = processamento.Gravador(lista,tabelas.Person, 1000)
                 elif (arq.filename.upper() == 'SALES.CUSTOMER.CSV'):
                     retorno =(processamento.Gravador(lista,tabelas.Customer, 1000)) 
-                elif (arq.filename.upper() == 'SALES.SALESORDERHEADER'):
+                elif (arq.filename.upper() == 'SALES.SALESORDERHEADER.CSV'):
                     retorno =(processamento.Gravador(lista,tabelas.SalesOrderHeader, 300)) 
                 elif (arq.filename.upper() == 'SALES.SALESORDERDETAIL.CSV'):
                     retorno =(processamento.Gravador(lista,tabelas.SalesOrderDetail, 300)) 
