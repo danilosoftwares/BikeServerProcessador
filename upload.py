@@ -5,6 +5,7 @@ import tabelas
 
 def upload_file():
     try:
+        retorno = {"status":997,"retorno":'nenhum arquivo encontrado no payload'}   
         if request.method == 'POST':
             for arq in request.files.getlist("file"):
                 lista = arq.read()

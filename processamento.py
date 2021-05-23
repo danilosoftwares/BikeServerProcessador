@@ -1,35 +1,4 @@
-from flask import jsonify
-import tabelas
 import banco
-import time
-
-def processar_all():
-    processar_person()
-    processar_customer()
-    processar_product()
-    processar_SalesOrderHeader()
-    processar_SalesOrderDetail()
-    processar_SpecialOfferProduct()
-    return jsonify({"status":0,"retorno":"ok"}) 
-
-def processar_person():                
-    return jsonify(Gravador('person.person.csv',tabelas.Person, 1000)) 
-
-def processar_customer():        
-    return jsonify(Gravador('Sales.Customer.csv',tabelas.Customer, 1000)) 
-
-def processar_SalesOrderHeader():    
-    return jsonify(Gravador('Sales.SalesOrderHeader.csv',tabelas.SalesOrderHeader, 300)) 
-
-def processar_SalesOrderDetail():    
-    return jsonify(Gravador('Sales.SalesOrderDetail.csv',tabelas.SalesOrderDetail, 300)) 
-
-def processar_SpecialOfferProduct():    
-    return jsonify(Gravador('Sales.SpecialOfferProduct.csv',tabelas.SpecialOfferProduct, 1000)) 
-
-def processar_product():    
-    return jsonify(Gravador('Production.Product.csv',tabelas.Product, 1000))       
-
 
 def Gravador(file, classe, bloco): 
     try:    
@@ -89,3 +58,20 @@ def FormatNull(lista):
             lista[i] = None
         i=i+1
     return lista
+
+
+def ApagaTudo():
+    retorno = {"status":0,"retorno":"ok"}   
+    try:    
+        connector = banco.GetConnector()
+        tabs = ['customer','person','product','salesorderdetail','salesorderheader','specialofferproduct']
+        for t in tabs:
+            r = banco.Set("DELETE from "+t,connector)
+            if (r['status'] != 0):
+                print(r)
+                retorno = r
+                break
+        connector.close()
+    except Exception as e:
+        retorno = {"status":999,"retorno":str(e)}                   
+    return retorno      
