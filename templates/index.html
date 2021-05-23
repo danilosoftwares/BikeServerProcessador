@@ -68,49 +68,55 @@
 		<script src="http://code.jquery.com/jquery-3.0.0.min.js"></script>
 			
 		<script>
-		  /*
-		   * For demonstration porpuse, all JavaScript code was incorporated in
-		   * the HTML file. But when developing your application, your JavaScript code
-		   * should be in a separated file. Check this page for more information:
-		   * https://developer.yahoo.com/performance/rules.html#external
-		   */
+			/*
+			* For demonstration porpuse, all JavaScript code was incorporated in
+			* the HTML file. But when developing your application, your JavaScript code
+			* should be in a separated file. Check this page for more information:
+			* https://developer.yahoo.com/performance/rules.html#external
+			*/
 
-		  $("#button-rel-person").click(function(e){
+			$("#button-rel-person").click(function(e){
 			e.preventDefault();
 			window.location.href = '/relatorio/person';
-		  });
-		  
-		  $("#button-rel-customer").click(function(e){
+			});
+
+			$("#button-rel-customer").click(function(e){
 			e.preventDefault();
 			window.location.href = '/relatorio/customer';
-		  });
-		  
-		  $("#button-rel-SpecialOfferProduct").click(function(e){
+			});
+
+			$("#button-rel-SpecialOfferProduct").click(function(e){
 			e.preventDefault();
 			window.location.href = '/relatorio/specialofferproduct';
-		  });
-		  $("#button-rel-Product").click(function(e){
+			});
+			$("#button-rel-Product").click(function(e){
 			e.preventDefault();
 			window.location.href = '/relatorio/product';
-		  });
-		  $("#button-rel-SalesOrderHeader").click(function(e){
+			});
+			$("#button-rel-SalesOrderHeader").click(function(e){
 			e.preventDefault();
 			window.location.href = '/relatorio/salesorderheader';
-		  });
-		  $("#button-rel-SalesOrderDetail").click(function(e){
+			});
+			$("#button-rel-SalesOrderDetail").click(function(e){
 			e.preventDefault();
 			window.location.href = '/relatorio/salesorderdetail';
-		  });
-		  
-		  
-		  $("#button-send").click(sendFormData);
-		  
-		  function sendFormData(){
-			  var formData = new FormData($("#form-demo").get(0));
-		  
-			  var ajaxUrl = "/arquivos/upload";
-			  
-			  $.ajax({
+			});
+
+
+			$("#button-send").click(sendFormData);
+
+			function sendFormData(){
+			
+				// disable button
+				$("#button-send").prop("disabled", true);
+				// add spinner to button
+				$("#button-send").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Processando...');
+
+				var formData = new FormData($("#form-demo").get(0));
+
+				var ajaxUrl = "/arquivos/upload";
+
+				$.ajax({
 				  url : ajaxUrl,
 				  type : "POST",
 				  data : formData,
@@ -118,19 +124,34 @@
 				  // required so that all data are correctly transferred
 				  contentType : false,
 				  processData : false
-			  }).done(function(response){
+				}).done(function(response){
 				  // In this callback you get the AJAX response to check
 				  // if everything is right...
+				  	// disable button
+					$("#button-send").prop("disabled", false);
+					// add spinner to button
+					$("#button-send").html('Enviar e Processar');
 				  alert(response.retorno);
-			  }).fail(function(e){
-				  // Here you should treat the http errors (e.g., 403, 404)
-				  alert('error:'+e);
-			  });
+				}).fail(function(e){
+				  	// disable button
+					$("#button-send").prop("disabled", false);
+					// add spinner to button
+					$("#button-send").html('Enviar e Processar');
+					// Here you should treat the http errors (e.g., 403, 404)
+					alert('error:'+e);
+				}).always(function() {
+
+				});
 		  }
 		  
 		  $("#button-del").click(sendFormDataDel);
 				  
 		  function sendFormDataDel(){
+				// disable button
+				$("#button-del").prop("disabled", true);
+				// add spinner to button
+				$("#button-del").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Processando...');
+
 			  var formData = new FormData($("#form-demo").get(0));
 		  
 			  var ajaxUrl = "/banco/apagar";
@@ -147,6 +168,10 @@
 				  // In this callback you get the AJAX response to check
 				  // if everything is right...
 				  alert(response.retorno);
+					// disable button
+					$("#button-del").prop("disabled", false);
+					// add spinner to button
+					$("#button-del").html('Apagar a Base');
 			  }).fail(function(e){
 				  // Here you should treat the http errors (e.g., 403, 404)
 				  alert('error:'+e);
