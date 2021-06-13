@@ -10,20 +10,20 @@ Basicamente se trata de uma api que contem essencialmente 3 rotinas
 ## Banco de dados
 A api tem uma classe de conexão e funções de acesso ao banco, o banco utilizado foi um banco mysql, nesta classe tem as rotinas:
  - Geração de banco, rotina que gera a estrutura do banco com base nas planilhas que seguem nas pasta de exemplo, ou seja, o banco foi desenvolvido préviamente pensado já nas planilhas
-```sh
+```python
 def Create():
 ```
  - Rotina de gravação e leituras genericas
-```sh
+```python
 def Set(comando, _conn=None):
 def Get(comando, _conn=None):
 ```
  - Função de conexão para ser reaproveitada em funções que tem rotinas em lista
-```sh
+```python
 def GetConnector():
 ```
  - Função de block (descontinuada)
-```sh
+```python
 def SetBlock(_lista, _conn=None):
 ```
 
