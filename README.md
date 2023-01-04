@@ -1,37 +1,37 @@
-# Api ETL feita em python
+# ETL API made in python
 
-## Resumo
-Esta API foi desenvolvida com critério educativo.
-Basicamente se trata de uma api que contem essencialmente 3 rotinas
-- Ler e processar um arquivo csv e gravar no banco de dados
-- Gerar um relatorio dos dados importados
-- Apagar os dados caso deseje re-importar
+## Summary
+This API was developed with educational criteria.
+Basically it is an api that contains essentially 3 routines
+- Read and process a csv file and write to the database
+- Generate a report of the imported data
+- Erase the data if you want to re-import
 
-## Banco de dados
-A api tem uma classe de conexão e funções de acesso ao banco, o banco utilizado foi um banco mysql, nesta classe tem as rotinas:
- - Geração de banco, rotina que gera a estrutura do banco com base nas planilhas que seguem nas pasta de exemplo, ou seja, o banco foi desenvolvido préviamente pensado já nas planilhas
+## Database
+The api has a connection class and database access functions, the database used was a mysql database, this class has the routines:
+  - Database generation, a routine that generates the structure of the database based on the spreadsheets that follow in the example folders, that is, the database was previously developed with the spreadsheets in mind
 ```python
 def Create():
 ```
- - Rotina de gravação e leituras genericas
+  - Generic recording and reading routine
 ```python
-def Set(comando, _conn=None):
-def Get(comando, _conn=None):
+def Set(command, _conn=None):
+def Get(command, _conn=None):
 ```
- - Função de conexão para ser reaproveitada em funções que tem rotinas em lista
+  - Connection function to be reused in functions that have list routines
 ```python
 def GetConnector():
 ```
- - Função de block (descontinuada)
+  - Block function (deprecated)
 ```python
-def SetBlock(_lista, _conn=None):
+def SetBlock(_list, _conn=None):
 ```
 
-## Relatório
-Basicametne a API monta um relatorio simples em html baseando-se em um scritp sql tambem simples
+## Report
+Basically the API builds a simple report in html based on a simple sql script
 
-## Processamento
-A Rotina de processamento basicamente ao ler os dados coloca os mesmos numa classe que analisa os dados conforme o pré entendimento dos campos da tabela. A gravação é feita em blocos, onde os mesmos são definidos conforme o tipo da tabela, esses blocos de inserção somente gravam e não fazem duplicidade nem alteração dos dados, por isso existe um botão de exclusão dos dados, visto que se trata de uma rotina simples
+## Processing
+The Processing Routine basically when reading the data puts them in a class that analyzes the data according to the pre-understanding of the table fields. The recording is done in blocks, where they are defined according to the table type, these insertion blocks only record and do not duplicate or change the data, that is why there is a data deletion button, since it is a routine simple
 
-## Utilizando
-![](demonstracao.gif)
+## Using
+![](demonstration.gif)
