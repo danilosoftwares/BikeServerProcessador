@@ -10,7 +10,7 @@ def upload_file():
             for arq in request.files.getlist("file"):
                 lista = arq.read()
                 lista = lista.decode('utf-8')
-                lista = lista.split('\r')
+                lista = lista.split('\n')
                 if (arq.filename.upper() == 'PERSON.PERSON.CSV'):
                     retorno = processamento.Gravador(lista,tabelas.Person, 1000)
                 elif (arq.filename.upper() == 'SALES.CUSTOMER.CSV'):

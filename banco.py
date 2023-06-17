@@ -1,8 +1,8 @@
 import mysql.connector
 
-v_user="dms@bikeserverproc"
-v_password=''
-v_host="bikeserverproc.mysql.database.azure.com"
+v_user="root"
+v_password='root'
+v_host="mydb"
 v_port=3306
 v_database='bike'
 
@@ -18,7 +18,7 @@ def Create():
         cursor.execute("CREATE DATABASE IF NOT EXISTS "+v_database)
 
         person = """
-        CREATE TABLE IF NOT EXISTS  person
+        CREATE TABLE IF NOT EXISTS  Person
         (
                 BusinessEntityID int(11) not null primary key,
                 PersonType varchar(10),
@@ -36,7 +36,7 @@ def Create():
         )
         """
         customer = """
-        CREATE TABLE IF NOT EXISTS  customer
+        CREATE TABLE IF NOT EXISTS  Customer
         (
                 CustomerID int(11) not null primary key,
                 PersonID int(11),
@@ -82,9 +82,9 @@ def Create():
         (				
                 SalesOrderID int(11)  not null,
                 RevisionNumber int(11),	
-                OrderDate TIMESTAMP,
-                DueDate TIMESTAMP,
-                ShipDate TIMESTAMP,
+                OrderDate timestamp,
+                DueDate timestamp default CURRENT_TIMESTAMP NOT NULL,
+                ShipDate timestamp default CURRENT_TIMESTAMP NOT NULL,
                 Status int(11),
                 OnlineOrderFlag int(11),
                 SalesOrderNumber VARCHAR(30),
@@ -105,7 +105,7 @@ def Create():
                 TotalDue float,
                 Comment text,
                 rowguid varchar(100),
-                ModifiedDate timestamp,
+                ModifiedDate timestamp default CURRENT_TIMESTAMP NOT NULL,
                 PRIMARY KEY (SalesOrderID)
         )
 
@@ -134,11 +134,11 @@ def Create():
                 Style varchar(10),
                 ProductSubcategoryID int(11),
                 ProductModelID int(11),
-                SellStartDate TIMESTAMP,
-                SellEndDate TIMESTAMP,
-                DiscontinuedDate TIMESTAMP,
+                SellStartDate timestamp default CURRENT_TIMESTAMP NOT NULL,
+                SellEndDate timestamp default CURRENT_TIMESTAMP NOT NULL,
+                DiscontinuedDate timestamp default CURRENT_TIMESTAMP NOT NULL,
                 rowguid varchar(100),
-                ModifiedDate timestamp,
+                ModifiedDate timestamp default CURRENT_TIMESTAMP NOT NULL,
                 PRIMARY KEY (ProductID)
         )
 

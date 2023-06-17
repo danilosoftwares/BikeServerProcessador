@@ -2,8 +2,9 @@ from flask import Flask, render_template
 import upload
 import relatorio
 import processamento
+import banco
 
-#banco.Create()
+banco.Create()
 
 app = Flask(__name__)
 
