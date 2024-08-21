@@ -64,7 +64,7 @@ def ApagaTudo():
     retorno = {"status":0,"retorno":"ok"}   
     try:    
         connector = banco.GetConnector()
-        tabs = ['customer','person','product','salesorderdetail','salesorderheader','specialofferproduct']
+        tabs = ['Customer','Person','Product','SalesOrderDetail','SalesOrderHeader','SpecialOfferProduct']
         for t in tabs:
             r = banco.Set("DELETE from "+t,connector)
             if (r['status'] != 0):
