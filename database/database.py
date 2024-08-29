@@ -6,7 +6,6 @@ v_host="mydb"
 v_port=3306
 v_database='bike'
 
-
 def GetConnector():
         return mysql.connector.connect(user=v_user, password=v_password, host=v_host, port=v_port, database=v_database)
 

@@ -1,4 +1,4 @@
-import banco
+import database.database as database
 
 def Gravador(file, classe, bloco): 
     try:    
@@ -6,7 +6,7 @@ def Gravador(file, classe, bloco):
         total = 0
         contador = 0
         wr = ''
-        connector = banco.GetConnector()
+        connector = database.GetConnector()
         listaSQL = []
         i = 1
         while(i < len(file)):
@@ -26,7 +26,7 @@ def Gravador(file, classe, bloco):
             if (contador > bloco):
                 listaSQL.append(') TB ')   
                 listaSQL.append(wr)  
-                r = banco.Set("".join(listaSQL),connector)
+                r = database.Set("".join(listaSQL),connector)
                 if (r['status'] != 0):
                     print(r)
                 total = total + (contador - 1)
@@ -38,7 +38,7 @@ def Gravador(file, classe, bloco):
         if (len(listaSQL) > 0):
             listaSQL.append(') TB ')   
             listaSQL.append(wr)  
-            r = banco.Set("".join(listaSQL),connector)
+            r = database.Set("".join(listaSQL),connector)
             if (r['status'] != 0):
                 print(r)
             total = total + (contador - 1)
@@ -60,13 +60,13 @@ def FormatNull(lista):
     return lista
 
 
-def ApagaTudo():
+def CleanAll():
     retorno = {"status":0,"retorno":"ok"}   
     try:    
-        connector = banco.GetConnector()
+        connector = database.GetConnector()
         tabs = ['Customer','Person','Product','SalesOrderDetail','SalesOrderHeader','SpecialOfferProduct']
         for t in tabs:
-            r = banco.Set("DELETE from "+t,connector)
+            r = database.Set("DELETE from "+t,connector)
             if (r['status'] != 0):
                 print(r)
                 retorno = r

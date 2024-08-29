@@ -1,7 +1,7 @@
 from flask import jsonify, request
 
-import processamento
-import tabelas
+import service.integrationService as integrationService
+import models.tablesModel as tablesModel
 
 def upload_file():
     try:
@@ -12,17 +12,17 @@ def upload_file():
                 lista = lista.decode('utf-8')
                 lista = lista.split('\n')
                 if (arq.filename.upper() == 'PERSON.PERSON.CSV'):
-                    retorno = processamento.Gravador(lista,tabelas.Person, 1000)
+                    retorno = integrationService.Gravador(lista,tablesModel.Person, 1000)
                 elif (arq.filename.upper() == 'SALES.CUSTOMER.CSV'):
-                    retorno =(processamento.Gravador(lista,tabelas.Customer, 1000)) 
+                    retorno =(integrationService.Gravador(lista,tablesModel.Customer, 1000)) 
                 elif (arq.filename.upper() == 'SALES.SALESORDERHEADER.CSV'):
-                    retorno =(processamento.Gravador(lista,tabelas.SalesOrderHeader, 300)) 
+                    retorno =(integrationService.Gravador(lista,tablesModel.SalesOrderHeader, 300)) 
                 elif (arq.filename.upper() == 'SALES.SALESORDERDETAIL.CSV'):
-                    retorno =(processamento.Gravador(lista,tabelas.SalesOrderDetail, 300)) 
+                    retorno =(integrationService.Gravador(lista,tablesModel.SalesOrderDetail, 300)) 
                 elif (arq.filename.upper() == 'SALES.SPECIALOFFERPRODUCT.CSV'):
-                    retorno =(processamento.Gravador(lista,tabelas.SpecialOfferProduct, 1000)) 
+                    retorno =(integrationService.Gravador(lista,tablesModel.SpecialOfferProduct, 1000)) 
                 elif (arq.filename.upper() == 'PRODUCTION.PRODUCT.CSV'):
-                    retorno =(processamento.Gravador(lista,tabelas.Product, 1000)) 
+                    retorno =(integrationService.Gravador(lista,tablesModel.Product, 1000)) 
                 else:
                     retorno = {"status":998,"retorno":'arquivo nao faz parte da lista de arquivos tratados pela api'}      
 

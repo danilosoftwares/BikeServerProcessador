@@ -1,24 +1,24 @@
 from flask import Flask, render_template
-import upload
-import relatorio
-import processamento
-import banco
+import service.uploadService as uploadService
+import service.reportService as reportService
+import service.integrationService as integrationService
+import database.database as database
 
-banco.Create()
+database.Create()
 
 app = Flask(__name__)
 
-app.add_url_rule('/relatorio/person', methods = ['GET'], view_func=relatorio.relatorioPerson)
-app.add_url_rule('/relatorio/customer', methods = ['GET'], view_func=relatorio.relatorioCustomer)
-app.add_url_rule('/relatorio/specialofferproduct', methods = ['GET'], view_func=relatorio.relatorioSpecialOfferProduct)
-app.add_url_rule('/relatorio/product', methods = ['GET'], view_func=relatorio.relatorioProduct)
-app.add_url_rule('/relatorio/salesorderheader', methods = ['GET'], view_func=relatorio.relatorioSalesOrderHeader)
-app.add_url_rule('/relatorio/salesorderdetail', methods = ['GET'], view_func=relatorio.relatorioSalesOrderDetail)
-app.add_url_rule('/arquivos/upload', methods = ['POST'], view_func=upload.upload_file)
-app.add_url_rule('/banco/apagar', methods = ['POST'], view_func=processamento.ApagaTudo)
+app.add_url_rule('/report/person', methods = ['GET'], view_func=reportService.reportPerson)
+app.add_url_rule('/report/customer', methods = ['GET'], view_func=reportService.reportCustomer)
+app.add_url_rule('/report/specialofferproduct', methods = ['GET'], view_func=reportService.reportSpecialOfferProduct)
+app.add_url_rule('/report/product', methods = ['GET'], view_func=reportService.reportProduct)
+app.add_url_rule('/report/salesorderheader', methods = ['GET'], view_func=reportService.reportSalesOrderHeader)
+app.add_url_rule('/report/salesorderdetail', methods = ['GET'], view_func=reportService.reportSalesOrderDetail)
+app.add_url_rule('/files/upload', methods = ['POST'], view_func=uploadService.upload_file)
+app.add_url_rule('/registers/clean', methods = ['POST'], view_func=integrationService.CleanAll)
 
 @app.route("/")
-def hello():
+def indexPage():
     return render_template('index.html')
     #return "Servico de Processamento Python Ativo!"
 

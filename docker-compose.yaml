@@ -7,16 +7,16 @@ services:
             - "32001:3306"
         environment:
             MYSQL_ROOT_PASSWORD: root
-    app:
-        container_name: myapp
-        image: danilosoftwares/bikeserverprocessador:latest
-        restart: always
-        links:
-            - "db"
-        ports:
-            - "5001:5000"
-        depends_on:
-            - db       
+    # app:
+    #     container_name: myapp
+    #     image: danilosoftwares/bikeserverprocessador:latest
+    #     restart: always
+    #     links:
+    #         - "db"
+    #     ports:
+    #         - "5001:5000"
+    #     depends_on:
+    #         - db       
     # python-app:
     #     build:
     #         context: .
